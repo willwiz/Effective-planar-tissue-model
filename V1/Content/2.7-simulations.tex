@@ -1,0 +1,42 @@
+\subsection{Numerical simulations}
+
+	A exhaustive numerical study using $\Psi_{eff}$ (Eqn. \ref{eqn:finalexponentialmodelformscaled}) is beyond the scope of this work. However, we hereby present an example implementation of the framework we proposed (Fig. \ref{fig:simulationframework}) using the structural model (Eqn. \ref{eqn:fullcollagen}) and $\Psi_{eff}$ (Eqn. \ref{eqn:finalexponentialmodelformscaled}) to facilitating numerical simulation of intact bioprothetic heart valves. The leaflet material consider are bovine pericardium (most commonly used for bioprothetic heart valve leaflets), porcine aortic valve (highly anisotropy response), and bovine pericardium with an uniform fiber ODF (isotropic). We replicated the response of these tissues using the structural model based on their microstructure. We then fit $\Psi_{eff}$ to the structural model by sampling along optimal loading paths. Next, we evaluated the computational cost and numerical robustness of $\Psi_{eff}$ and its ability to handle a wide range of material properties and the complex \textit{in vivo} deformations in numerical simulations.
+    
+    
+    For numerical simulation, we utilized the custom finite element simulation software developed by Hsu \textit{et al.} \cite{hsu_dynamic_2015, kamensky_immersogeometric_2015, kiendl_isogeometric_2015}. Briefly, the finite element code was developed for isogeometric fluid solid dynamics simulation of heart valves, focusing mostly on the tri-leaflet atrioventricular valves. The tri-leaflet geometry is based on the commonly used Edwards Pericardial Heart Valve with Kirchhoff-Love shells for the leaflets \cite{kiendl_isogeometric_2015}. We utilized the quasi-static portion of the code for simulations of leaflet deformations at physiologic pressure (80 mmHg). The implementation of $\Psi_{eff}$ was validated using biaxial mechanical testing simulations (Appendix \ref{sec:biaxialsimulation}, Fig. \ref{fig:biaxvalidation}). A total was 484 B\'ezier elements was used for each leaflets, and the leaflet thickness was assumed to be uniform and 0.386mm thick \cite{hsu_dynamic_2015}. For simplicity and consistency, the collagen fiber direction was assume to be uniform along the circumferential direction of each leaflet. No root, atrial chamber or the surrounding artery was used. The bioprothetic heart valve stent was made rigid and undeformable, serving a stationary reference for the leaflets. 
+%-----------------------------------------------------------
+%	Simulations												
+%-----------------------------------------------------------
+
+ 
+
+
+
+%-----------------------------------------------------------
+%	Forward and backwards simulations
+%-----------------------------------------------------------
+
+% \subsection{Simulating the structural model response}
+% \subsubsection{Forward and backwards simulation}
+% \subsubsection{Validation}
+
+
+%-----------------------------------------------------------
+%	Planar Biaxial Simulation
+%-----------------------------------------------------------
+
+
+%-----------------------------------------------------------
+%	Tri-leaflet valve simulations
+%-----------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+

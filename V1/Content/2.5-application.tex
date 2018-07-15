@@ -1,0 +1,94 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Model Applications										%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%-----------------------------------------------------------
+%	Use of structural constitutive models
+%-----------------------------------------------------------
+\subsection{Example application for planar soft tissues}
+
+	The example we use to test the our approach (Fig. \ref{fig:simulationframework}) is the exogenously cross-linked structural model presented in Zhang and Sacks \cite{zhang_modeling_2017}. This meso-scale structural model is computationally expensive due to integration over the collagen fiber architecture but have been shown to be able to accurately reproduce the mechanical response of a variety of soft tissues, such as mitral valve leaflets \cite{zhang_meso_2016}, ovine pulmonary artery \cite{fata_insights_2014}, myocardium \cite{avazmohammadi_novel_2017}, and exogenously cross-linked bovine pericaridium \cite{sacks_novel_2016}, and can be used to simulate the time evolving properties of bioprosthetic heart valves. To briefly summarize, this model is composed of 3 components: collagen, $\Psi_\mathrm{col}$, matrix, $\Psi_\mathrm{mat}$, and interactions, $\Psi_\mathrm{int}$. 
+%==========================================================%
+%-------------------	begin EQUATION 	-------------------%
+\begin{equation}
+\Psi 	= \Psi_\mathrm{col} + \Psi_\mathrm{mat} + \Psi_\mathrm{int} \label{eqn:structuralmodelcomponents}
+\end{equation}
+%-------------------	 end EQUATION 	-------------------%
+%==========================================================%
+The matrix term, $\Psi_\mathrm{mat}$, is a modified version of the Yeoh model that is more linear in 2nd Piola Kirchhoff stress and stretch, 
+%==========================================================%
+%-------------------	begin EQUATION 	-------------------%
+\begin{equation}\label{eqn:matrixmodel}
+\begin{aligned}
+\Psi_\mathrm{mat} = &\frac{\eta_M}{2} \left[ \frac{1}{a}\left( I_1 -3\right)^{a} + \frac{r}{b} \left( I_1 -3\right)^{b} \right], \\
+&\text{with } 1<a<b, ab <2, 0 \leq r.
+\end{aligned}
+\end{equation}
+%-------------------	 end EQUATION 	-------------------%
+%==========================================================%
+This model contains four parameters: $\eta_M$ is the modulus parameter corresponding to the same parameter in the Neo Hookean model, $a$, $b$, and $r$ are the shape parameters, where $a$ and $b$ control the shape of the two terms, while $r$ is the weight between the two terms. In general, $a \approx 1$, $b \approx 1.87$ and $r \approx 15$ can be treated as constants. 
+
+
+	The response of collagen fibers is integration over all collagen fibers architecture, their orientation and crimp. The fiber orientations is described by a beta distribution function and fiber crimp is described by a beta distribution function of the stretches needed to straighten the fibers, the slack stretch $\lambda_s$. These are referred to as the orientation distribution function (ODF), $\Gamma$, and the recruitment distribution function (RDF), $D$, respectively, with the form given in Zhang and Sacks \cite{zhang_meso_2016, zhang_modeling_2017, sacks_novel_2016}. The response of the collagen fibers is given by the sum of all fiber with respect the ODF and RDF describing the orientation and crimp of each fiber respectively,
+%==========================================================%
+%-------------------	begin EQUATION 	-------------------%
+\begin{equation} \label{eqn:collagen}
+\begin{aligned}
+\Psi_\mathrm{col} =& \phi_\mathrm{col} \eta_C \int\displaylimits_\theta \Gamma(\theta) 
+\int\displaylimits_1^{\lambda_\theta} D\left(\lambda_s \right) \left( \frac{\lambda_\theta}{\lambda_s} - 1\right)^2 \mathrm{d}\lambda_s \mathrm{d}\theta,
+\end{aligned}
+\end{equation}
+%-------------------	 end equation 	-------------------%
+%----------------------------------------------------------%
+where $\eta_C$ is the modulus of the collagen fibers, $\lambda_\theta = \sqrt{\mathbf{n}_\theta \cdot \mathbf{C}\mathbf{n}_\theta}$ is the stretch of the ensemble of collagen fiber with the same orientation, and $\lambda_\mathrm{\theta}/\lambda_s$ is the true stretch of the collagen fibers after they are straightened \cite{zhang_meso_2016}. Similarly, the response of the interaction term is given by integration over pairs of fibers based on their orientation and crimp, which contains a quadruple integral. 
+%==========================================================%
+%-------------------	begin EQUATION 	-------------------%
+\begin{equation}
+\Psi_\mathrm{int} = \frac{\eta_I}{2} \int\displaylimits_\alpha \int\displaylimits_\beta \Gamma(\alpha) \Gamma(\beta) \int\displaylimits_1^{\lambda_\alpha} \int\displaylimits_1^{\lambda_\beta} D\left( x_\alpha \right) D\left( x_\beta \right) \left( \frac{\lambda_\alpha \lambda_\beta}{x_\alpha x_\beta} - 1\right)^2 \,\mathrm{d}x_\alpha \,\mathrm{d}x_\beta \,\mathrm{d}\alpha \,\mathrm{d}\beta.
+\end{equation}
+%-------------------	 end EQUATION 	-------------------%
+%==========================================================%
+For clarity of presentation, the slack stretches, $\lambda_s$, are replaced by $x_\alpha$ and $x_\beta$ for fiber oriented along the angle $\alpha$ and $\beta$ respectively. Only one parameter, the modulus $\eta_I$, is used to account for all interactions, with the same $\Gamma$ and $D$ already given above. 
+
+The second Piola Kirchhoff stress of all three components of the full model (Eqn. \ref{eqn:structuralmodelcomponents}), $\mathbf{S}=2\frac{\partial\Psi}{\partial\mathbf{C}}$, is 
+%==========================================================%
+%-------------------	begin EQUATION 	-------------------%
+\begin{equation} \label{eqn:fullcollagen}
+\begin{aligned}
+\mathbf{S} = & \phi_\mathrm{col} \eta_C \int\displaylimits_\theta \Gamma(\theta)\left\lbrace 
+\int\displaylimits_1^{\lambda_\theta} \frac{D\left( x \right)}{x} \left( \frac{1}{x}- \frac{1}{\lambda_\theta}\right) \mathrm{d}x \right\rbrace \mathbf{n}_\theta\otimes\mathbf{n}_\theta \mathrm{d}\theta \\
++ & \phi_\mathrm{col} \eta_I \int\displaylimits_\alpha \int\displaylimits_\beta \Gamma \left(\alpha \right) \Gamma \left( \beta \right) \\
+& \times \left[ \left\lbrace 
+\int\displaylimits_1^{\lambda_\alpha} \int\displaylimits_1^{\lambda_\beta} 
+\frac{2 \lambda_\beta D(x_\alpha) D(x_\beta)}{x_\alpha x_\beta} 
+\left( \frac{\lambda_\alpha}{x_\alpha} \frac{\lambda_\beta}{x_\beta} - 1\right) \mathrm{d}x_\alpha \, \mathrm{d}x_\beta 
++\int\displaylimits_1^{\lambda_\beta} D(x_\beta) \left( \frac{\lambda_\beta}{x_\beta} -1  \right)^2 \mathrm{d}x_\beta \right\rbrace \right.  \frac{\mathbf{n}_\alpha \otimes \mathbf{n}_\alpha}{\lambda_\alpha}  \\
+& + \left. \left\lbrace
+\int\displaylimits_1^{\lambda_\alpha} \int\displaylimits_1^{\lambda_\beta} 
+\frac{2 \lambda_\alpha D(x_\alpha) D(x_\beta)}{x_\alpha x_\beta} 
+\left( \frac{\lambda_\alpha}{x_\alpha} \frac{\lambda_\beta}{x_\beta} - 1\right) \mathrm{d}x_\alpha \, \mathrm{d}x_\beta 
++ \int\displaylimits_1^{\lambda_\alpha} D(x_\alpha) \left( \frac{\lambda_\alpha}{x_\alpha} -1  \right)^2 \mathrm{d}x_\alpha \right\rbrace \frac{\mathbf{n}_\beta \otimes \mathbf{n}_\beta}{\lambda_\beta}  \right] \mathrm{d}\alpha \, \mathrm{d}\beta\\
++ & \phi_\mathrm{mat} \eta_M \left[\left(\left( I_1 - 3\right)^{a - 1} + r \left( I_1 - 3\right)^{b - 1}\right) \left( \mathbf{I} - C_{33}\mathbf{C}^{-1}\right)  \right],\\
+\end{aligned}
+\end{equation}
+%-------------------	 end EQUATION 	-------------------%
+%==========================================================%
+where $\phi_\mathrm{col}$ and $\phi_\mathrm{mat}$ are the mass fraction of collagen and matrix respectively. 
+    
+	Although very accurate and predictive, this model is not only computationally expensive, numerical integration results in a significant decrease in numerical precision when the number of quadrature point is insufficient. This can create a number of issues for convergence during parameter optimization. Thus, the implementation of this model is complicated by a constant balance between computational cost and numerical robustness during optimization. Using $\Psi_{eff}$ (Eqn. \ref{eqn:finalexponentialmodelformscaled}) is a solution to these issues. Furthermore, some modifications can be made to reduce the form of the model if necessary based on how well each term captures the behavior of the respective material (see Appendix \ref{sec:specificform}).
+    
+    
+    
+
+
+
+	
+
+
+
+
+
+
+
+
+

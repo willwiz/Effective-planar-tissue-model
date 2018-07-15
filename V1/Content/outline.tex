@@ -1,0 +1,81 @@
+% \begin{enumerate}
+% \item The use of numerical simulations has become increasing popular in predicting the outcomes of diseases, pathology, and surgical interventions
+
+% \item Soft tissue simulations have a wide variety of applications in 
+%     \begin{enumerate}
+%     \item A growth and remodeling
+%     \item Simulation of aortic aneurysm
+%     \item Circulatory simulation
+%     \item Applications in valve simulations (cite \cite{soares_biomechanical_2016}, etc)
+%     \item Applications in cellular processes
+%     \item Coupled-physics simulations of the heart
+%     \end{enumerate}
+
+% \item Constitutive models used for simulating the mechanical responses have become increasing complex with more knowledge we have on the underlying mechanisms of with prevalent used of multi-scale modeling and inverse modeling approaches. 
+%     \begin{enumerate}
+%     \item the increasing need for understanding the underlying mechanisms in modeling and simulations
+%     \item Increased use of multi-scale modeling approaches in literature
+%     \item Inverse modeling in literature
+%     \item Structural modeling
+%     \item These modeling are not computational efficient enough for use in higher order organ-level simulations
+%     \end{enumerate}
+
+% \item An effective computational efficient model, which can mimic the mechanical response of a wide variety of more complicated models, is be an effective approach to this problem
+%     \begin{enumerate}
+%     \item computational efficiency
+%     \item easy to implement
+%     \item single implementation for all types of constitutive model
+%     \end{enumerate}
+
+% \item We need a computationally efficient and robust approach to map between the mechanical response of the computationally efficient model with the more complicated model. 
+% \end{enumerate}
+
+
+% %%%%%%%%%%%%%%%%        Figure 1        %%%%%%%%%%%%%%%%
+% \begin{figure}[hbt] \label{fig:Inversemodel}
+
+% \begin{tikzpicture}[node distance=1.5cm]
+% %%%%%%%%%%%%          Place nodes          %%%%%%%%%%%%
+% \node[item] (exp_data) {Experimental\\data};
+% \node[task, right of=exp_data, xshift=1cm] (par_est) {Parameter\\estimation};
+% \node[item, right of=par_est, xshift=1.2cm] (Struc_model) {Structural\\model};
+% \node[task, right of=Struc_model, xshift=1.5cm] (model_regression) {Model\\regression};
+% \node[item, right of=model_regression, xshift=1.5cm] (CEM) {Computationally\\efficient model};
+
+% \node[item, below of=exp_data, yshift=-1.5cm] (exp_data2) {Experimental\\data};
+% \node[task, below of=par_est, yshift=-1.5cm] (inverse_model) {Inverse\\ modeling};
+% \node[item, below of=Struc_model, yshift=-1.5cm] (CEM2) {Computationally\\efficient model};
+% \node[task, below of=model_regression, yshift=-1.5cm] (I_model_regression) {Inverse Model\\regression};
+% \node[item, below of=CEM, yshift=-1.5cm] (Struc_model2) {Structural\\model};
+
+% %%%%%%%%%%%%          Draw arrows          %%%%%%%%%%%%
+% \draw[arrow] (exp_data) -- (par_est);
+% \draw[arrow] (par_est) -- (Struc_model);
+% \draw[arrow] (Struc_model) -- (model_regression);
+% \draw[arrow] (model_regression) -- (CEM);
+
+% \draw[arrow] (exp_data2) -- (inverse_model);
+% \draw[arrow] (inverse_model) -- (CEM2);
+% \draw[arrow] (CEM2) -- (I_model_regression);
+% \draw[arrow] (I_model_regression) -- (Struc_model2);
+
+% \node[above of=Struc_model, yshift=-0.5cm] {\underline{\Large Forward model}};
+% \node[below of=CEM2] {\underline{\Large Inverse model}};
+
+% \draw[-open triangle 45] (CEM.0) -| ([xshift=2.0cm,yshift=-0.5cm]Struc_model2.270) -| node[pos=0.25,below] {\textit{Inform}} (CEM2.270);
+
+% \draw[-open triangle 45] (Struc_model.335) -- node[rotate=335,above] {\textit{Compare}} (Struc_model2.140);
+% \draw[open triangle 45-] (Struc_model.325) -- (Struc_model2.150);
+
+% \end{tikzpicture}
+% \caption{Model regression validation for the inverse problem}
+% \end{figure}
+% %%%%%%%%%%%%%%%%       End Fig. 1       %%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%        Figure 1        %%%%%%%%%%%%%%%%
+% \begin{figure}[hbt] \label{fig:Inversemodel}
+% \centering
+% \includegraphics[width=0.9\textwidth]{CEMdiagram.pdf}
+% \caption{Model regression validation for the inverse problem}
+% \end{figure}
+%%%%%%%%%%%%%%%%       End Fig. 1       %%%%%%%%%%%%%%%%

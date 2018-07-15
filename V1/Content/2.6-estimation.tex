@@ -1,0 +1,37 @@
+%-----------------------------------------------------------
+%	Parameter estimation
+%-----------------------------------------------------------
+\subsection{Parameter estimation}
+
+	The objective function form we use is 
+%==========================================================%
+%-------------------	begin EQUATION 	-------------------%
+\begin{subequations}\label{eqn:objectivefunction}
+\begin{gather}
+S_m = \dpd{\Psi}{E_m} = \mathbf{m}_0\cdot\mathbf{S}\mathbf{m}_0,
+	\quad S_n = \dpd{\Psi}{E_n} = \mathbf{n}_0\cdot\mathbf{S}\mathbf{n}_0,
+    \quad S_\phi = \dpd{\Psi}{E_\phi} = 2\mathbf{m}_0\cdot\mathbf{S}\mathbf{n}_0 \label{eqn:responsefunctions}\\
+\mathcal{F} = \sum_i^n \left(S_m(\hat{E}_M^i, \hat{E}_S^i, \hat{E}_\phi^i) - \hat{S}_M^i \right)^2 + \left(S_n(\hat{E}_M^i, \hat{E}_S^i, \hat{E}_\phi^i) - \hat{S}_S^i \right)^2 + \left(S_\phi(\hat{E}_M^i, \hat{E}_S^i, \hat{E}_\phi^i) - \hat{S}_\phi^i \right)^2
+\end{gather}
+\end{subequations}
+%-------------------	 end EQUATION 	-------------------%
+%==========================================================%
+This removes rigid body rotation and puts the stresses along the material axes, thus casts the stresses are the response functions directly and minimizes covariance between the parameters during optimization. The choice L2-norm, sum of the difference of the squares of the stresses, is the most popular. Other possible options include the log of the L2-norm, the log-norm presented by Aggarwal \cite{aggarwal_improved_2017}, and L2-norm of the strain energy, and the other stress measures.
+
+	For optimal speed when using $\Psi_{eff}$ (Eqn. \ref{eqn:finalexponentialmodelformscaled}) to homogenize micro-models, gradient methods are ideal, which are the fastest. Because we require some non-linear constraint to enforce convexity, we utilized the interior point algorithm provided by the IPOPT library \cite{waechter_implementation_2005}. The initial guess is easily derived for the model scaling method, with the parameter $c_0$ being the maximum strain energy in the available data. The exponent parameters $b_i$ are generally very consistent in value, with the quadratic parameters being $b_1 \approx 10$, $b_2 \approx 10$, and $b_4 \approx -10$, the quartic parameters being $b_5 \approx 2000$, $b_6 \approx 500$, $b_9 \approx 200$, $b_{10} \approx 200$, $b_{11} \approx 200$, $b_{12} \approx 200$. We find this setup to work extremely well, and no further modification being necessary. 
+
+
+
+
+\subsection{Reproducing the response of soft tissues using the effective constitutive model and optimal loading paths}\label{sec:reproducefung}
+
+	For our approach of using the effective constitutive models to facilitate numerical simulation (Fig. \ref{fig:simulationframework}), we need to overcome the limitation of common phenomenological approaches on predicting the mechanical response of micro-models outside of the data set used for parameter estimation \cite{sun_biaxial_2003}. For this, we will first reproduced the results of Sun \textit{et al.} \cite{sun_biaxial_2003} using the generalized Fung model, then repeat the process using $\Psi_{eff}$ (Eqn. \ref{eqn:finalexponentialmodelformscaled}) with optimal loading paths. We will focus on glutaraldehyde cross-linked bovine pericardium for the soft tissue. Bovine pericardium is the most common material used to fabricate bioprosthetic heart valves. It is extremely dense in collagenous fibers, having broad fiber splays with approximately $30\deg$ in standard deviation. The resulting mechanical behavior have strong coupling between the axial stretches. Thus, the mechanical response of some bovine pericardium specimens are fitted to the structural model (Eqn. \ref{eqn:fullcollagen}). The structural model is then used to generate stress strain data along loading paths with stress ratios ($S_{11}/S_{22}$) of $0.1:1$, $0.5:1$, $0.75:1$, $1:1$, $1:0.75$, $1:0.5$, and $1:0.1$. Following Sun \textit{et al.} \cite{sun_biaxial_2003}, the generalized Fung model (Eqn. \ref{eqn:generalizedfungmodela}) was fitted to the five loading paths in the physiologic range ($0.5:1$, $0.75:1$, $1:1$, $1:0.75$, $1:0.5$), then the remain two loading paths were predicted and compared to the data. The reverse scenario was done, where the generalized Fung model was fitted to the non-physiologic loading paths ($0.1:1$ and $1:0.1$) while the remaining five loading paths were predicted. Following the same step, $\Psi_{eff}$ was fitted to the three optimal loading paths ($0.1:1$, $1:1$, and $1:0.1$) while the remaining loading paths were predicted. 
+    
+    We also considered some alternative loading paths. In the original paper by Fung et al. on the constitutive modeling of arteries \cite{fung_pseudoelasticity_1979}, they discussed the use of 'physiologic protocols' as the optimal data set for parameter estimation. These 'physiologic protocols' are loading paths that covers a range larger than some lower bounds for $E_{11}$ and $E_{22}$. Conceptually, this is meant to correspond to the range after accounting for the pre-strain between the zero stress configuration and the \textit{in vivo} unloaded (not stress free) configuration. For clarity, to distinguish between this and the physiologic range (the range where the physiologic loading path is likely to reside) in Sun \textit{et al.}, we will refer to this as the post-pre-strain range. We reproduced the post-pre-strain protocols in figure 5 of Fung \textit{et al.} \cite{fung_pseudoelasticity_1979}, and compared the results to using the optimal loading paths. 
+    
+	For other soft tissues and alternative model forms, see Appendix \ref{sec:otherresults}
+
+
+
+
+

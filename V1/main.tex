@@ -1,0 +1,400 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Document Type											%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \documentclass[cleanfoot,12pt]{asme2ej}
+\documentclass[review]{elsarticle}
+
+%% Set margins 	--------------------------------------------
+\usepackage{geometry}
+\geometry{letterpaper, portrait, lmargin = 1.0in, rmargin = 1.0in, tmargin=1.0in, bmargin = 1.0in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Package Used											%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%a%%%%%%%%%%%%%%%%%%
+
+%-----------------------------------------------------------
+%	Topography
+%-----------------------------------------------------------
+\usepackage{microtype}
+
+\usepackage{setspace} %allow double spacing text
+%-----------------------------------------------------------
+
+
+%-----------------------------------------------------------
+%	Important equation editing packages
+%-----------------------------------------------------------
+\usepackage{amssymb,amsmath,mathtools,commath}
+\DeclareMathAlphabet\mathbfcal{OMS}{cmsy}{b}{n}	% Bolded caligraphy font
+\usepackage{subdepth} 	% Fix the alignment of subscripts in equations
+\allowdisplaybreaks
+%-----------------------------------------------------------
+
+%-----------------------------------------------------------
+%	For making tables
+%-----------------------------------------------------------
+\usepackage[table]{xcolor}
+\definecolor{Gray}{gray}{0.9}
+%-----------------------------------------------------------
+
+%-----------------------------------------------------------
+%	For formating citations and hyperlinking
+%-----------------------------------------------------------
+\usepackage[breaklinks=true]{hyperref}
+\usepackage{breakcites}
+\usepackage{lineno}
+% \modulolinenumbers[5]
+%-----------------------------------------------------------
+
+%-----------------------------------------------------------
+%	Editing sections and appendix
+%-----------------------------------------------------------
+\usepackage[titletoc,title]{appendix} 	% Allows the use of appendices
+\usepackage[section]{placeins}			% Force figures to be within 
+										%	the sections
+%-----------------------------------------------------------
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Nomenclature ASME template does not create nomenclatures%
+%%. specified in the Journal format							% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{nomencl}
+\makenomenclature
+\renewcommand{\nomname}{Nomenclature}
+%-----------------------------------------------------------
+%	Nomenclature
+%-----------------------------------------------------------
+%% This code creates the groups
+%-----------------------------------------------------------
+\usepackage{etoolbox}
+\renewcommand\nomgroup[1]{%
+  \item[\bfseries
+  \ifstrequal{#1}{K}{Key Terms}{%
+  \ifstrequal{#1}{S}{Symbols}}%
+]}
+\apptocmd{\thebibliography}{\raggedright}{}{}
+%-----------------------------------------------------------
+%% This code creates quotes
+%-----------------------------------------------------------
+\AtBeginEnvironment{quote}{\singlespacing\small}
+%-----------------------------------------------------------
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Making the custom header for specifying the Journal	in	%
+%%. accordance to the ASME Journal format specified			%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{fancyhdr}
+%-----------------------------------------------------------
+%	The settings are below
+%-----------------------------------------------------------
+\renewcommand{\headrulewidth}{0pt}	% No horizontal line as 
+%	specified
+\setlength{\headheight}{13.6pt}		% Adjustment for header 
+%	size
+\pagestyle{fancy}
+\fancyhf{}
+\cfoot{\thepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Pagination as required by the Journal but not included	%
+%%. in the Document Class									%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \pagenumbering{arabic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  User defined hyphenation								%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \hyphenation{cross-link-ed}
+
+    
+    
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%	Begin Document											%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+
+
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%  About the Journal and Authors for ASME Journal			%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% %-------	Article Title	-------%
+% \title{A Computationally Efficient Material Model for the Effective Response of Planar Soft Tissues}
+% %-------	Journal Name	-------%
+% \lhead{\it\small Journal of the Mechanical Behavior of Biomedical Materials}
+% %-------	Authors and Affiliations	-------%
+% %	Affiliations needs to start with a commented line for proper spacing
+% \author{Will Zhang
+% 	\affiliation{%
+% 	Willerson Center for Cardiovascular Modeling and Simulation\\
+%     Institute for Computational Engineering and Sciences\\
+%     Department of Biomedical Engineering\\
+%     University of Texas at Austin\\
+%     Austin, TX 78712-0027, U.S.A.\\
+%     Email: wilwiz@utexas.edu   
+%     }
+% }
+% \author{Rana Zakerzadeh
+% 	\affiliation{%
+%     Willerson Center for Cardiovascular Modeling and Simulation\\
+%     Institute for Computational Engineering and Sciences\\
+%     University of Texas at Austin\\
+%     Austin, TX 78712-0027, U.S.A.\\
+%     Email: rana.zakerzadeh@utexas.edu
+% 	}
+% }            
+% \author{Wenbo Zhang
+% 	\affiliation{%
+%     	Willerson Center for Cardiovascular Modeling and Simulation\\
+%         Institute for Computational Engineering and Sciences\\
+%         University of Texas at Austin\\
+%         Austin, TX 78712-0027, U.S.A.\\
+%         Email: wenbo@ices.utexas.edu
+% 		}
+% 	}
+% \author{Michael S. Sacks\thanks{Address all correspondence to this author.}
+%     \affiliation{%W. A. “Tex” Moncrief, Jr. Simulation-Based Engineering Science Chair\\
+%     Willerson Center for Cardiovascular Modeling and Simulation\\
+%     Institute for Computational Engineering and Sciences\\
+%     Department of Biomedical Engineering\\
+%     The University of Texas at Austin\\
+%     201 East 24th Street, ACES 5.438\\
+%     1 University Station, C0200\\
+%     Austin, TX 78712-0027, U.S.A.\\
+%     Email: msacks@ices.utexas.edu
+% 	}
+% }
+% \maketitle
+% \doublespacing
+% \bibliographystyle{asmems4}
+% %-----------------------------------------------------------
+% %	Abstract
+% %-----------------------------------------------------------
+
+% \begin{abstract}
+% \input{Content/0-abstract}
+% \end{abstract}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  About the Journal and Authors for Elsevier Journals		%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%-------	Journal Name	-------%
+\journal{Journal of the Mechanical Behavior of Biomedical Materials}
+
+%-------	Bibliography Style	-------%
+\bibliographystyle{elsarticle-num}
+
+\begin{frontmatter}
+%-------	Article Title	-------%
+\title{A Material Modeling Approach for the Effective Response of Planar Soft Tissues for Efficient Computational Simulations}
+
+
+%-------	Authors and Affiliations	-------%
+\author[1]{Will Zhang}
+\ead{willwiz@utexas.edu}
+
+
+\author[1]{Rana Zakerzadeh}        
+\ead{ranaz@ices.utexas.edu}        
+        
+        
+\author[1]{Wenbo Zhang}
+\ead{wenbo@ices.utexas.edu}
+
+\author[1]{Michael S. Sacks\corref{mycorrespondingauthor}}
+\cortext[mycorrespondingauthor]{Principal corresponding author:\\%
+	\-\hspace{5ex} Michael S. Sacks, Ph.D.\\
+	\-\hspace{5ex} W. A. “Tex” Moncrief, Jr. Simulation-Based Engineering Science Chair\\
+	\-\hspace{5ex} Professor of Biomedical Engineering\\
+	\-\hspace{5ex} Institute for Computational Engineering and Sciences (ICES)\\
+	\-\hspace{5ex} The University of Texas at Austin\\
+	\-\hspace{5ex} 201 East 24th Street, ACES 5.438\\
+	\-\hspace{5ex} 1 University Station, C0200\\
+	\-\hspace{5ex} Austin, TX 78712-0027, U.S.A.}
+\ead{msacks@ices.utexas.edu}
+
+\address[1]{
+	Willerson Center for Cardiovascular Modeling and Simulation\\
+    Institute for Computational Engineering and Sciences\\
+    Department of Biomedical Engineering\\
+    The University of Texas at Austin\\
+    Austin, TX 78712-0027, U.S.A.
+}
+
+
+
+%-----------------------------------------------------------
+%	Abstract
+%-----------------------------------------------------------
+\begin{abstract}
+\input{Content/0-abstract}
+\end{abstract}
+
+\begin{keyword}
+soft tissue mechanics\sep constitutive model\sep optimal design\sep phenomenological\sep optimization
+\end{keyword}
+
+\end{frontmatter}
+
+\doublespacing
+
+
+\linenumbers
+
+
+
+\newpage
+
+%-----------------------------------------------------------
+%	Introduction
+%-----------------------------------------------------------
+
+\input{Content/1-introduction}
+
+%-----------------------------------------------------------
+%	Constitutive Modeling
+%-----------------------------------------------------------
+
+%-------------------	kinematics		-------------------%
+\input{Content/2.1-kinematics}
+
+%---------------	generalized model form	---------------%
+\input{Content/2.2-generalized}
+
+%-------------------	scaling			-------------------%
+\input{Content/2.3-scaling}
+
+%---------------	optimal loading path	---------------%
+\input{Content/2.4-optimal}
+
+%-------------------	application		-------------------%
+\input{Content/2.5-application}
+
+%---------------	parameter estimation	---------------%
+\input{Content/2.6-estimation}
+
+%-------------------	simulation		-------------------%
+\input{Content/2.7-simulations}
+
+%-----------------------------------------------------------
+%	Results
+%-----------------------------------------------------------
+
+\input{Content/5-results}
+
+%-----------------------------------------------------------
+%	Discussion
+%-----------------------------------------------------------
+
+\input{Content/6-discussion}
+
+%-----------------------------------------------------------
+%	Conclusion
+%-----------------------------------------------------------
+
+\input{Content/7-conclusion}
+
+%-----------------------------------------------------------
+%	Acknowledgements
+%-----------------------------------------------------------
+
+% \begin{acknowledgment}
+% This work is in thanks for the support from NIH grants: 
+%   HL-068816, HL-089750, HL-070969, and HL-108330 
+% \end{acknowledgment}
+
+\section*{Acknowledgements}
+This work is in thanks for the support from NIH grants: 
+  HL-068816, HL-089750, HL-070969, and HL-108330 
+
+%-----------------------------------------------------------
+%	Nomenclature
+%-----------------------------------------------------------
+\newpage
+\input{Content/nomenclature}
+
+%-----------------------------------------------------------
+%	References
+%-----------------------------------------------------------
+\newpage
+\section*{References}
+
+\bibliography{WCCMS,ccsdifference}
+
+%-----------------------------------------------------------
+%	Appendix
+%-----------------------------------------------------------
+%\appendix
+\newpage
+% \renewcommand{\theequation}{\thechapter.\arabic{equation}}
+\begin{appendices}
+
+\renewcommand\thefigure{\thesection.\arabic{figure}}    
+\renewcommand\thetable{\thesection.\arabic{table}}   
+\renewcommand\theequation{\thesection.\arabic{equation}}
+
+\setcounter{figure}{0}
+\setcounter{equation}{0}
+\input{Content/A1-elasticity}
+
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\setcounter{equation}{0}
+\input{Content/A2-correlation}
+
+%---------------	specific form for BP	---------------%
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\setcounter{equation}{0}
+\input{Content/A3-specific}
+
+
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\setcounter{equation}{0}
+\input{Content/A4-biaxsimulation}
+
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\setcounter{equation}{0}
+\input{Content/A5-optimal}
+
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\setcounter{equation}{0}
+\input{Content/A6-comparison}
+
+\end{appendices}
+
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
